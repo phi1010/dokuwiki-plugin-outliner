@@ -26,7 +26,7 @@ jQuery(function () {
         }
     };
 
-    $outliner_dls
+     $outliner_dls
         .addClass('outliner-js')
         .find('dt')
             .click(function() {
@@ -36,7 +36,21 @@ jQuery(function () {
                     setState(this.parentNode, 'open');
                 }
             })
+            .on("touchstart", function (e) {
+                if (jQuery(this.parentNode).hasClass('hover')) {
+                    return true;
+                } 
+                else {
+                    jQuery(this.parentNode).addClass('hover');
+                    $('dl.outliner').not(this.parentNode).removeClass('hover');
+                    e.preventDefault();
+                    return false;
+                }
+            })
             .mouseover(function() {
+                if(jQuery(this.parentNode).hasClass('hover')) {
+                    return false;
+                }
                 var thisPos = jQuery(this).position();
                 jQuery(this).siblings('dd').css({'left': thisPos.left + 40 + 'px', 'top': thisPos.top + 20 + 'px'});
             });
